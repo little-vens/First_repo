@@ -9,22 +9,22 @@ FILE = 'initrd.lz'
 
 def main():
     try:
-        f = ftplib.FTP(HOST)   #CONNENT TO FTP SERVER: 'ftp.sjtu.edu.cn'
+        f = ftplib.FTP(HOST)   #Connect TO FTP SERVER: 'ftp.sjtu.edu.cn'
     except (socket.error, socket.gaierror) as e:
         print('ERROR: cannot reach "%s"' % HOST)
         return
     print('*** connect to host "%s"' % HOST)
 
     try:
-        f.login()
+        f.login()             #login with annonymously
     except ftplib.error_perm:
-        print('ERROR: cannot login anonymmously')
+        print('ERROR: cannot login anonymously')
         f.quit()
         return
     print('*** Logged in as "anonymous"')
 
     try:
-        f.cwd(DIRN)
+        f.cwd(DIRN)          #Change dir
     except ftplib.error_perm:
         print('ERROR: cannot CD to "%s"' % DIRN)
         f.quit()
@@ -33,7 +33,7 @@ def main():
 
     try:
         f.retrbinary('RETR %s' % FILE,
-                     open(FILE, 'wb').write)
+                     open(FILE, 'wb').write)    #Donlowd file with CMD 'RETR'
     except ftplib.error_perm:
         print('ERROR: cannot read file "%s"' % FILE)
         os.unlink(FILE)
