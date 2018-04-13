@@ -16,7 +16,7 @@ def main():
     print('*** connect to host "%s"' % HOST)
 
     try:
-        f.login()             #login with annonymously
+        f.login()             #Login with annonymously
     except ftplib.error_perm:
         print('ERROR: cannot login anonymously')
         f.quit()
@@ -32,8 +32,9 @@ def main():
     print('*** CD "%s" folder' % DIRN)
 
     try:
-        f.retrbinary('RETR %s' % FILE,
-                     open(FILE, 'wb').write)    #Donlowd file with CMD 'RETR'
+        with open(FILE, 'wb') as bf:
+            f.retrbinary('RETR %s' % FILE,
+                     bf.write)    #Donlowd file with CMD 'RETR'
     except ftplib.error_perm:
         print('ERROR: cannot read file "%s"' % FILE)
         os.unlink(FILE)
